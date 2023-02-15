@@ -21,6 +21,9 @@ export class ItemsAddComponent {
     private router: Router) {}
   btnSave_OnClick(){
     console.log('form', this.itemForm);
+    if(!this.itemForm.valid){
+      return;
+    }
     const item: Item = this.itemForm.value;
     this.toDoService.addItem(item).pipe(
       take(1),
