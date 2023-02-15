@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { take, tap } from 'rxjs';
 import { ToDoService } from '../to-do.service';
+import { Router } from '@angular/router'
 
 export interface PeriodicElement {
   name: string;
@@ -27,11 +28,17 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./items-list.component.scss']
 })
 export class ItemsListComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['name', 'weight', 'symbol', 'delete', 'edit'];
   dataSource: any;
-  constructor(private toDoService: ToDoService) {}
+  constructor(
+    private toDoService: ToDoService,
+    private router: Router) {}
 
   ngOnInit() {
+    this.getAllItems();
+  }
+  
+  getAllItems() {
     this.toDoService.getAllItems().pipe(
       take(1),
       tap(v => {
@@ -39,6 +46,21 @@ export class ItemsListComponent implements OnInit {
         this.dataSource = v;
       })
     ).subscribe();
+  }
+  btnDelete_OnClick(item: any){
+    console.log('item', item);
+    this.toDoService.deleteItem(item.itemId).pipe(
+      take(1),
+      tap((res) => {
+        console.log(res);
+        this.getAllItems();
+      })
+    ).subscribe();
+  }
+
+  btnEdit_OnClick(element: any) {
+    this.toDoService.selectedItem = element;
+    this.router.navigate(['/list/edit'])
   }
 
 }
