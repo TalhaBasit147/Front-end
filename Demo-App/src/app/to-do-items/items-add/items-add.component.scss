@@ -29,4 +29,38 @@ section {
     justify-content: center;
     width: 120px;
   }
-  
+
+  body {
+    text-align: center;
+}
+form
+{
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+.oc-border {
+  border: 1px solid green;
+}
+
+.oc-background {
+  background-color: limegreen;
+}
+
+.oc-name {
+  font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+  white-space: nowrap;
+}
+
+.oc-designation {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-style: italic;
+  white-space: nowrap;
+}
+
+.oc-img {
+  margin-left: -10px;
+  width: 60px;
+  height: 60px;
+}

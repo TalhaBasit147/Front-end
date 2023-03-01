@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
-import { tap, take } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { tap, take, Subscription } from 'rxjs';
 import { ToDoService } from '../to-do.service';
 
 @Component({
@@ -9,12 +10,15 @@ import { ToDoService } from '../to-do.service';
   templateUrl: './items-edit.component.html',
   styleUrls: ['./items-edit.component.scss']
 })
-export class ItemsEditComponent {
+export class ItemsEditComponent implements OnDestroy{
   itemForm: FormGroup;
+  subscriptions$: Subscription;
 constructor(
   private toDoService: ToDoService,
-  private router: Router){
-  console.log(this.toDoService.selectedItem)
+  private router: Router,
+  private spinner: NgxSpinnerService
+  ){
+    this.subscriptions$ = new Subscription();
   this.itemForm =  new FormGroup({
     ItemName: new FormControl(this.toDoService.selectedItem.itemName, Validators.required),
     ItemDescription: new FormControl(this.toDoService.selectedItem.itemDescription, Validators.required),
@@ -22,13 +26,18 @@ constructor(
   });
 }
 btnUpdate_OnClick() {
-  this.toDoService.updateItem(this.toDoService.selectedItem.itemId,  this.itemForm.value).
+  this.spinner.show();
+  this.subscriptions$.add(this.toDoService.updateItem(this.toDoService.selectedItem.itemId,  this.itemForm.value).
   pipe(
     take(1),
-    tap((Response)=>{
-      console.log('done', Response);
+    tap(()=>{
+      this.spinner.hide();
       this.router.navigate(['/list']);
     })
-  ).subscribe();
-}
+    ).subscribe());
+  }
+  
+  ngOnDestroy(): void {
+    this.subscriptions$.unsubscribe();
+  }
 }

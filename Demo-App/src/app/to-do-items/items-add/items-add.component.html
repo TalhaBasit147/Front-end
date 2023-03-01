@@ -1,33 +1,43 @@
-<form action="" [formGroup]="itemForm">
-    <p>
+<mat-card id="card" style="text-align: center;">
+  <mat-card-title>
+    Add Item
+  </mat-card-title>
+
+  <mat-card-content>
+    <form action="" [formGroup]="itemForm">
+      <p>
         <mat-form-field appearance="fill">
-          <mat-label>Item Name</mat-label>
-          <input matInput placeholder="Name" formControlName="ItemName">
-          <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
-          <!-- <mat-hint>Hint</mat-hint> -->
+          <input matInput placeholder="Name" formControlName="ItemName" />
         </mat-form-field>
       </p>
-      
-    <p>
+
+      <p>
         <mat-form-field appearance="fill">
-          <mat-label>DESCRIPTION</mat-label>
-          <input matInput placeholder="Description" formControlName="ItemDescription">
-          <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
-          <!-- <mat-hint>Hint</mat-hint> -->
+          <input
+            matInput
+            placeholder="Description"
+            formControlName="ItemDescription"
+          />
         </mat-form-field>
       </p>
       <p>
-        <!-- <mat-form-field appearance="fill"> -->
-          <mat-label>Is Status Done</mat-label>
-          <mat-checkbox class="example-margin" formControlName="ItemStatus"></mat-checkbox>
-          <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
-          <!-- <mat-hint>Hint</mat-hint> -->
-        <!-- </mat-form-field> -->
+        <mat-label>Status</mat-label>
+        <mat-checkbox
+          class="example-margin"
+          formControlName="ItemStatus"
+        ></mat-checkbox>
       </p>
       <section>
         <div class="example-button-row">
-            <button mat-raised-button color="primary" (click)="btnSave_OnClick()">Save</button>
-            <button mat-raised-button color="accent" routerLink="../">Cancel</button>
+          <button mat-raised-button color="primary" (click)="btnSave_OnClick()">
+            Save
+          </button>
+          <button mat-raised-button color="accent" routerLink="../">
+            Cancel
+          </button>
         </div>
       </section>
-</form>
+    </form>
+  </mat-card-content>
+  <ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+</mat-card>
